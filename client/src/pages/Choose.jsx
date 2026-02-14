@@ -1,5 +1,4 @@
-Perfect! Now copy and paste this entire code into Notepad:
-javascriptimport { useCallback, useState } from "react"
+import { useCallback, useState } from "react"
 import Confetti from "react-confetti"
 import RestaurantCard from "../components/RestaurantCard"
 
