@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+Perfect! Now copy and paste this entire code into Notepad:
+javascriptimport { useCallback, useState } from "react"
 import Confetti from "react-confetti"
 import RestaurantCard from "../components/RestaurantCard"
 
@@ -9,7 +10,7 @@ function Choose() {
   const [categories, setCategories] = useState("")
   const [restaurants, setRestaurants] = useState([])
 
-  const fetchRestaurants = async () => {
+  const fetchRestaurants = useCallback(async () => {
     if (!location.trim()) {
       alert("Please enter a location!")
       return
@@ -50,7 +51,7 @@ function Choose() {
     }
 
     setLoading(false)
-  }
+  }, [location, categories])
 
   const removeFromFront = () => {
     setRestaurants((prevRestaurants) => {
@@ -80,8 +81,8 @@ function Choose() {
   // Settings screen
   if (showSettings) {
     return (
-      <div className="flex flex-col justify-center items-center w-full h-full bg-red-200 gap-8 p-8">
-        <h1 className="text-6xl font-black text-white uppercase">Find Restaurants</h1>
+      <div className="flex flex-col justify-center items-center w-full h-full bg-red-200 gap-8 p-4 md:p-8">
+        <h1 className="text-4xl md:text-6xl font-black text-white uppercase text-center">Find Restaurants</h1>
         
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
           <div className="mb-6">
@@ -153,36 +154,40 @@ function Choose() {
   // Restaurant selection screen
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-full h-full bg-red-200 gap-12">
+      <div className="flex flex-col justify-start items-center w-full min-h-screen bg-red-200 gap-4 py-4 overflow-y-auto">
         <button
-          className="absolute top-4 left-4 px-4 py-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-all"
+          className="self-start ml-4 mt-4 px-4 py-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-all"
           onClick={resetSearch}
         >
           ← New Search
         </button>
 
         {restaurants.length > 1 ? (
-          <div className="flex flex-row justify-center items-center w-full h-1/2 gap-24">
-            <RestaurantCard
-              restaurant={restaurants[0]}
-              onClick={removeFromBack}
-            />
+          <div className="flex flex-col w-full items-center gap-6 px-4 pb-8">
+            <div className="w-full max-w-sm">
+              <RestaurantCard
+                restaurant={restaurants[0]}
+                onClick={removeFromBack}
+              />
+            </div>
 
-            <h1 className="text-5xl font-black text-white">OR</h1>
+            <h1 className="text-4xl font-black text-white my-4">OR</h1>
 
-            <RestaurantCard
-              restaurant={restaurants[restaurants.length - 1]}
-              onClick={removeFromFront}
-            />
+            <div className="w-full max-w-sm">
+              <RestaurantCard
+                restaurant={restaurants[restaurants.length - 1]}
+                onClick={removeFromFront}
+              />
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center w-full h-full gap-12">
+          <div className="flex flex-col justify-center items-center w-full gap-8 px-4 py-8">
             <Confetti />
 
-            <h1 className="text-8xl font-black text-white animate-bounce">
+            <h1 className="text-5xl font-black text-white animate-bounce text-center">
               Winner!
             </h1>
-            <div className="flex flex-row justify-center items-center w-full h-1/2 gap-24">
+            <div className="w-full max-w-sm">
               <RestaurantCard
                 restaurant={restaurants[0]}
                 onClick={() => {
